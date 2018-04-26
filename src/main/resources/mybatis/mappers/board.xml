@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardVO">
+
+    <!-- 쿼리문 작성 -->
+    <!--삽입-->
+    <insert id="insert" parameterType="kr.co.bit.vo.BoardVO">
+    <![CDATA[
+        insert into BOARD values (SEQ_BOARD_NO.nextval,#{title} , #{content}, 0, sysdate, #{user_no})
+
+        ]]>
+</insert>
+    <!--전체 호출-->
+    <select id="listAll" resultType="kr.co.bit.vo.BoardVO">
+        <![CDATA[
+        select rownum rnum, temp.*
+        from (select b.no, b.title, b.content, b.hit, b.reg_date, u.NAME, b.USER_NO
+        from board b, USERS u
+        where b.user_no=u.NO order by no desc) temp
+         /*where rownum between ? and ?";*/
+        ]]>
+    </select>
+    <!--키워드 호출-->
+    <select id="searchkwd" parameterType="String" resultType="kr.co.bit.vo.BoardVO">
+    <![CDATA[
+        select b.NO, b.TITLE, b.CONTENT, b.HIT, b.REG_DATE, u.name
+    from BOARD b, USERS u
+    where u.no = b.USER_NO and b.TITLE like '%'|| #{kwd} || '%'
+        ]]>
+</select>
+    <!--조회수 카운트-->
+    <update id="count" parameterType="String">
+        <![CDATA[
+        update BOARD set HIT=hit+1 where no=#{no}
+        ]]>
+    </update>
+    <!--삭제-->
+    <delete id="delete" parameterType="String">
+        <![CDATA[
+        delete from BOARD where no =#{no}
+        ]]>
+    </delete>
+    <!--글 하나 찾아오기-->
+    <select id="searchcontent" parameterType="String" resultType="kr.co.bit.vo.BoardVO">
+        <![CDATA[
+        select * from BOARD where NO=#{no}
+        ]]>
+    </select>
+    <!--글수정-->
+    <update id="update" parameterType="kr.co.bit.vo.BoardVO">
+        <![CDATA[
+        update BOARD
+        set title=#{title}, content=#{content}
+        where no=${no}
+        ]]>
+    </update>
+</mapper>

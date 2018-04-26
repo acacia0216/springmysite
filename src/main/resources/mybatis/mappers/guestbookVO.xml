@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestbookVO">
+
+    <!-- 쿼리문 작성 -->
+
+<select id="listAll" resultType="kr.co.bit.vo.GuestBookVO">
+    <![CDATA[
+    select * from GUESTBOOK order by no desc
+]]>
+</select>
+
+    <insert id="insert" parameterType="kr.co.bit.vo.GuestBookVO">
+        <![CDATA[
+        insert into GUESTBOOK
+        values (SEQ_GUESTBOOK_NO.nextval,#{name},#{password},#{content},sysdate)
+        ]]>
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        <![CDATA[
+        delete from GUESTBOOK where NO=#{no}
+        ]]>
+    </delete>
+
+</mapper>

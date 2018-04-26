@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userVO">
+
+    <!-- 쿼리문 작성 -->
+
+    <select id="login" parameterType="kr.co.bit.vo.UserVO" resultType="kr.co.bit.vo.UserVO">
+    <![CDATA[
+        select * from USERS
+        where EMAIL=#{email} and PASSWORD=#{password}
+        ]]>
+</select>
+
+    <insert id="insert" parameterType="kr.co.bit.vo.UserVO">
+        <![CDATA[
+        insert into USERS values (
+        SEQ_USER_NO.nextval,#{name},#{email},#{password},#{gender}
+        )
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="kr.co.bit.vo.UserVO">
+        <![CDATA[
+        update USERS
+        set NAME=#{name}, PASSWORD=#{password}, GENDER=#{gender}
+        where NO=#{no}
+]]>
+    </update>
+
+    <select id="nameupdate" parameterType="int" resultType="UserVO">
+        <![CDATA[
+        select * from USERS
+        where no=${no}
+]]>
+    </select>
+    <!--<update id="식별자" parameterType="기본자료형 또는 vo">-->
+    <!--</update>-->
+
+    <!--<delete id="식별자" parameterType="기본자료형 또는 vo">-->
+    <!--</delete>-->
+
+
+</mapper>
