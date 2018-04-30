@@ -6,6 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="./assets/css/user.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/assets/js/jquery/jquery-1.12.4.js"></script>
     <title>Insert title here</title>
 </head>
 <body>
@@ -26,7 +27,8 @@
 
                     <label class="block-label" for="email">이메일</label>
                     <input id="email" name="email" type="text" value="">
-                    <input type="button" value="id 중복체크">
+                    <input id="btnEmailCheck" type="button" value="id 중복체크">
+                    <span id="msg"></span>
 
                     <label class="block-label">패스워드</label>
                     <input name="password" type="password" value="">
@@ -56,4 +58,28 @@
 </div> <!-- /container -->
 
 </body>
+<script type="text/javascript">
+    $("#btnEmailCheck").on("click", function () {
+        console.log("버튼찍기!!!!!!!!!!!!")
+        var email = $("#email").val();
+        console.log(email);
+        $.ajax({
+            url: "/emailcheck",
+            type: "post",
+            data: {email : email},
+
+            dataType: "json",
+            success: function (result) {
+            if(result == true){
+                $("#msg").html("<font color='red'>사용 가능한 아이디입니다.</font>")
+            }else{
+                $("#msg").html("<font color='red'>이미 사용중인 아이디입니다.</font>")
+            }
+            },
+            error: function (XHR, status, error) {
+                console.error(status + " : " + error);
+            }
+        })
+    })
+</script>
 </html>

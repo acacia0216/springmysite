@@ -34,6 +34,14 @@
         where no=${no}
 ]]>
     </select>
+
+    <select id="idcheck" parameterType="String" resultType="String">
+        <![CDATA[
+        select EMAIL
+        from USERS
+        where email=#{email}
+        ]]>
+    </select>
     <!--<update id="식별자" parameterType="기본자료형 또는 vo">-->
     <!--</update>-->
 

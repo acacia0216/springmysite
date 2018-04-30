@@ -29,4 +29,9 @@ public class UserDAO {
         UserVO userVO1 = sqlSession.selectOne("userVO.nameupdate",userVO);
         return userVO1;
     }
+
+    public String idcheck(String email) {
+        String idcheck = sqlSession.selectOne("userVO.idcheck",email);
+        return idcheck;
+    }
 }

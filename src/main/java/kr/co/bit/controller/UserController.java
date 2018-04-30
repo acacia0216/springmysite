@@ -6,9 +6,7 @@ import kr.co.bit.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -88,5 +86,13 @@ public class UserController {
             session.removeAttribute("authUser");
         }
         return "main/index";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/emailcheck",method = RequestMethod.POST)
+    public Boolean exists(@RequestParam String email){
+        System.out.println("아작스 이메일 체크 : "+email);
+        boolean idcheck = userService.idcheck(email);
+        return idcheck;
     }
 }

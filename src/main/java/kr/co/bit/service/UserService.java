@@ -27,4 +27,16 @@ public class UserService {
     public UserVO nameupdate(UserVO userVO) {
         return userDAO.nameupdate(userVO);
     }
+
+    public boolean idcheck(String email) {
+        String bool = userDAO.idcheck(email);
+        boolean idcheck = false;
+        if(bool == null) {
+            System.out.println("아이디 사용 가능");
+            idcheck = true;
+        }else{
+            System.out.println("해당 아이디가 이미 존재함");
+        }
+        return idcheck;
+    }
 }
