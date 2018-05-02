@@ -23,5 +23,24 @@
         delete from GUESTBOOK where NO=#{no}
         ]]>
     </delete>
+    <insert id="add" parameterType="kr.co.bit.vo.GuestBookVO">
+        <selectKey keyProperty="no" resultType="String" order="BEFORE">
+            select SEQ_GUESTBOOK_NO.nextval from dual
+        </selectKey>
+        <![CDATA[
+		insert into guestbook
+         	values ( #{no}, #{name}, #{password}, #{content}, SYSDATE )
+    	]]>
+    </insert>
 
+    <select id="addget" parameterType="String" resultType="kr.co.bit.vo.GuestBookVO">
+        select no, name, content, reg_date
+        from guestbook
+        where no=#{no}
+    </select>
+
+    <delete id="ajaxdelete" parameterType="String">
+        delete from GUESTBOOK
+        where no=#{no}
+    </delete>
 </mapper>

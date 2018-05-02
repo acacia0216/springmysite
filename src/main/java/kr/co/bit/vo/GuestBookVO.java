@@ -58,4 +58,15 @@ public class GuestBookVO {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "GuestBookVO{" +
+                "no='" + no + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", content='" + content + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

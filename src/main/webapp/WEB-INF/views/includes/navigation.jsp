@@ -11,5 +11,6 @@
         <li><a href="/index">메인화면으로</a></li>
         <li><a href="/guestbooklist">방명록</a></li>
         <li><a href="/boardlist">게시판</a></li>
+        <li><a href="/list_ajax">ajax방명록</a></li>
     </ul>
 </div> <!-- /navigation -->

@@ -17,7 +17,7 @@
      -->
 
     <!--컨트롤러 위치 알려주는 코드-->
-    <context:component-scan base-package="kr.co.bit.controller" />
+    <context:component-scan base-package="kr.co.bit.controller, kr.co.bit.api.controller" />
     <!-- 기본 뷰 리졸버 -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">

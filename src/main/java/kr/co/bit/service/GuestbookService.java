@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GuestbookService {
@@ -29,5 +31,22 @@ public class GuestbookService {
     public void delete(String no){
         System.out.println("delete service 들어옴");
         guestBookDAO.delete(no);
+    }
+
+    public GuestBookVO add(GuestBookVO guestBookVO){
+        GuestBookVO guestBookVO1 = guestBookDAO.add(guestBookVO);
+        String no = guestBookVO1.getNo();
+        GuestBookVO guestBookVO2 = guestBookDAO.addget(no);
+        return guestBookVO2;
+    }
+
+    public void ajaxdelete(String no,String password) {
+        Map map = new HashMap();
+        map.put("no",no);
+        map.put("password",password);
+        System.out.println("아작딜서비스");
+        System.out.println(no);
+        System.out.println(password);
+        guestBookDAO.ajaxdelete(map);
     }
 }
