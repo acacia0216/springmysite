@@ -29,6 +29,11 @@ public class GuestBookDAO {
         return list;
     }
 
+    public List<GuestBookVO> ajaxlistAll(String num) {
+        System.out.println("listAll DAO 들어옴");
+        List<GuestBookVO> list = sqlSession.selectList("guestbookVO.ajaxlistAll",num);
+        return list;
+    }
 
     public GuestBookVO add(GuestBookVO guestBookVO) {
         System.out.println("전 : "+guestBookVO.toString());
@@ -45,5 +50,9 @@ public class GuestBookDAO {
         System.out.println("아작딜다오");
         sqlSession.delete("guestbookVO.ajaxdelete",map);
         System.out.println("아작딜다오 리턴없어도 나오냐");
+    }
+
+    public GuestBookVO ajaxdelconfirm(String no) {
+        return sqlSession.selectOne("guestbookVO.ajaxdelconfirm",no);
     }
 }

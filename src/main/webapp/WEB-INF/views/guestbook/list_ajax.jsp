@@ -74,7 +74,6 @@
 </div> <!-- /container -->
 
 
-
 <script type="text/javascript"
         src="/assets/bootstrap/js/bootstrap.min.js"></script>
 
@@ -106,12 +105,10 @@
 <!-- /.modal -->
 
 
-
 </body>
 <script type="text/javascript">
-    $(document).ready(function () {
-       fetchList();
-    })
+
+
 
     // $("#btnmodal").on("click",function () {
     //     console.log("모달");
@@ -119,7 +116,7 @@
     // })
 
 
-    $("ul").on("click","input",function () {
+    $("ul").on("click", "input", function () {
         event.preventDefault();
         console.log("삭제버튼");
         $("#del-pop").modal();
@@ -129,7 +126,8 @@
 
     })
 
-    $("#btn_del").on("click",function () {
+
+    $("#btn_del").on("click", function () {
         var no = $("#modalNo").val();
         var password = $("#modalPassword").val();
 
@@ -137,45 +135,55 @@
             url: "/api/guestbook/delete",
             type: "post",
             //contenttype,data
-            data:{no:no,password:password},
+            data: {no: no, password: password},
 
             dataType: "json",
             success: function (result) {
                 console.log(result);
-                var del = "del"+result
-                $("#"+del).remove();
-
+                if (result == true) {
+                    var del = "del" + no;
+                    $("#" + del).remove();
+                }else{
+                    console.log("안지워졌으면 DB에서 삭제가 안됬나보지"+result);
+                }
+                $("#modalNo").val("");
+                $("#modalPassword").val("");
             },
-            error: function (XHR, status, error) {
-                console.error(status + " : " + error);
-            }
+            error:
+
+                function (XHR, status, error) {
+                    console.error(status + " : " + error);
+                }
         })
         $("#del-pop").modal("hide");
     })
 
 
-
-
-
-
-    $("#btnAdd").on("click",function () {
+    $("#btnAdd").on("click", function () {
         event.preventDefault();
         console.log("btnAdd");
+        var text = $("textarea").val();
+        var result = text.replace(/(\n|\r\n)/g, '<br>');
+        console.log(result);
+
+
         var name = $("[name=name]").val();
         var password = $("[name=password]").val();
-        var content = $("[name=content]").val();
+        // var content = $("[name=content]").val();
         console.log(name);
         console.log(password);
-        console.log(content);
+        // console.log(content);
+        // guestbookVO = {name: $("[name=name]").val(), password: $("[name=password]").val(), content: $("[name=content]").val()}
         $.ajax({
             url: "/api/guestbook/add",
             type: "post",
-            //contenttype,data
-            data:{name:name,password:password,content:content},
+            // contentType:"application/json",
+            // data: JSON.stringify(guestbookVO),
+            data:{name:name,password:password,content:result},
 
             dataType: "json",
             success: function (guestbookVO) {
-                render(guestbookVO,"up");
+                render(guestbookVO, "up");
                 $("[name=name]").val("");
                 $("[name=password]").val("");
                 $("[name=content]").val("");
@@ -189,17 +197,24 @@
 
 
 
-    function fetchList() {
+    $(document).ready(function () {
+        number = 1;
+        console.log(number);
+        fetchList(number);
+    })
+
+    function fetchList(number) {
         $.ajax({
             url: "/api/guestbook/list",
             type: "get",
+            data:{num:number},
             //contenttype,data
 
             dataType: "json",
             success: function (list) {
-                console.log(list);
-                for (var i = 0; i < list.length; i++) {
-                    render(list[i],"down");
+                for (var i = 0; i < 10; i++) {
+                    console.log(list[i]);
+                    render(list[i], "down");
                 }
             },
             error: function (XHR, status, error) {
@@ -210,16 +225,18 @@
 
     function render(guestbookVO, updown) {
         var str = "";
-        str += "<li id='del"+guestbookVO.no+"'>";
+        str += "<li id='del" + guestbookVO.no + "'>";
         str += "    <table>";
         str += "        <tr>";
         str += "            <td>[" + guestbookVO.no + "]</td>";
         str += "            <td>" + guestbookVO.name + "</td>";
-        str += "            <td><input type='button' id='"+guestbookVO.no +"'value=삭제></td>";
+        str += "            <td><input type='button' id='" + guestbookVO.no + "'value=삭제></td>";
         str += "        </tr>";
         str += "        <tr>";
         str += "            <td colspan=4>";
-        str += guestbookVO.content;
+         // var text = guestbookVO.content;
+        // var result = text.replace(/(<br>|<br\/>|<br \/>)/g, '<br>');
+         str += guestbookVO.content;
         str += "            </td>";
         str += "        </tr>";
         str += "    </table>";
@@ -233,6 +250,22 @@
             console.log("오류")
         }
     }
+
+    $(window).on("scroll",function () {
+        console.log(number);
+        // console.log($(window).scrollTop());
+        // console.log($(document).height());
+        // console.log($(window).height());
+
+        if(Math.round($(window).scrollTop()) == $(document).height() - $(window).height()){
+            number+=10;
+            console.log(number);
+            fetchList(number);
+        }
+    })
+
+
+
 
     // /api/guestbook/delete?no'+guestbookVO.no+'&password='+$('[name=modalPassword]').val()
 </script>

@@ -41,6 +41,16 @@
 
     <delete id="ajaxdelete" parameterType="String">
         delete from GUESTBOOK
-        where no=#{no}
+        where no=#{no} and password=#{password}
     </delete>
+
+    <select id="ajaxdelconfirm" parameterType="String" resultType="kr.co.bit.vo.GuestBookVO">
+        select * from GUESTBOOK
+        where no=#{no}
+    </select>
+
+    <select id="ajaxlistAll" parameterType="int" resultType="kr.co.bit.vo.GuestBookVO">
+        select temp.* from (select rownum rnum,g.NO,g.NAME,g.REG_DATE,g.CONTENT from GUESTBOOK g order by g.no desc) temp where rnum between #{no} and #{no}+10
+    </select>
+
 </mapper>

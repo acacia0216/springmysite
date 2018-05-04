@@ -28,9 +28,9 @@
                 <tr>
                     <td class="label">내용</td>
                     <td>
-                        <div class="view-content">
+                        <pre class="view-content">
                             ${searchcontent.content}
-                        </div>
+                        </pre>
                     </td>
                 </tr>
 

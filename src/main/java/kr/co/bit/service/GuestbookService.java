@@ -5,7 +5,6 @@ import kr.co.bit.vo.GuestBookVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class GuestbookService {
         return guestBookVO2;
     }
 
-    public void ajaxdelete(String no,String password) {
+    public boolean ajaxdelete(String no, String password) {
         Map map = new HashMap();
         map.put("no",no);
         map.put("password",password);
@@ -48,5 +47,17 @@ public class GuestbookService {
         System.out.println(no);
         System.out.println(password);
         guestBookDAO.ajaxdelete(map);
+        GuestBookVO guestBookVO = guestBookDAO.ajaxdelconfirm(no);
+        boolean flag = false;
+        if(guestBookVO == null){
+            flag = true;
+        }
+        System.out.println(flag);
+        return flag;
+    }
+    public List<GuestBookVO> ajaxlistAll(String num) {
+        System.out.println("ajaxlistAll service 들어옴");
+        List<GuestBookVO> list = guestBookDAO.ajaxlistAll(num);
+        return list;
     }
 }
