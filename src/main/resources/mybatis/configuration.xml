@@ -8,5 +8,6 @@
         <mapper resource="mybatis/mappers/userVO.xml" />
         <mapper resource="mybatis/mappers/guestbookVO.xml" />
         <mapper resource="mybatis/mappers/board.xml" />
+        <mapper resource="mybatis/mappers/fileVO.xml" />
     </mappers>
 </configuration>

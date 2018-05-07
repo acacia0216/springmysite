@@ -15,7 +15,7 @@
 		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
 		
 		<div id="wrapper">
-			<div id="contents">
+			<div id="content">
 				<div id="guestbook">
 					
 					<form action="/guestbookinsert" method="post">
