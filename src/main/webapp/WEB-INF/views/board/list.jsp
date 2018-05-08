@@ -20,7 +20,7 @@
                 <input type="text" id="kwd" name="kwd" value="">
                 <input type="submit" value="찾기">
             </form>
-            <table class="tbl-ex" style=TABLE-layout:fixed;>
+            <table class="tbl-ex">
 
                 <tr>
                     <th>번호</th>
@@ -31,11 +31,11 @@
                     <th>&nbsp;</th>
                 </tr
                 <%--for문 시작--%>
-                <c:forEach items="${boardlist}" var="boardlist">
+                <c:forEach items="${map.list}" var="boardlist">
                     <tr>
                         <td>${boardlist.no}</td>
-                        <td style="text-overflow : ellipsis;overflow : hidden;">
-                            <nobr><a href="/boardview/${boardlist.no}">${boardlist.title}</a></nobr>
+                        <td>
+                            <a href="/boardview/${boardlist.no}">${boardlist.title}</a>
                         </td>
                         <td>${boardlist.name}</td>
                         <td>${boardlist.hit}</td>
@@ -51,23 +51,25 @@
                 </c:forEach>
 
             </table>
-            <%--${requestScope.allPage.size()/10}--%>
-            <%--<div class="pager">--%>
-                <%--<ul>--%>
-                    <%--<c:if test="${5개 페이지보다 작은 페이지가 있으면}">--%>
-                    <%--<li><a href="">◀</a></li>--%>
-                    <%--</c:if>--%>
-                    <%--<c:forEach items="${requestScope.allPage.size()/10}" var="number">--%>
-                        <%--<c:if test="${number}">--%>
-                            <%--<li><a class="selected">${number}</a></li>--%>
-                        <%--</c:if>--%>
-                        <%--<c:if test="${number}">--%>
-                            <%--<li><a href="/board&page=${number}">${number}</a></li>--%>
-                        <%--</c:if>--%>
-                    <%--</c:forEach>--%>
-                    <%--<c:if test="${5개 페이지보다 큰 페이지가 있으면}">--%>
-                    <%--<li><a href="">▶</a></li>--%>
-                    <%--</c:if>--%>
+
+            <div class="pager">
+                <ul>
+                    <c:if test="${map.crtPage > map.pageBtnCount}">
+                    <li><a href="/boardlist/${map.startPageBtnNo-1}">◀</a></li>
+                    </c:if>
+
+                    <c:forEach begin="${map.startPageBtnNo}" end="${map.endPageBtnNo}" step="1" var="i">
+                        <c:if test="${map.crtPage ne i}">
+                            <li><a href="/boardlist/${i}">${i}</a></li>
+                        </c:if>
+                        <c:if test="${map.crtPage eq i}">
+                            <li><a class="selected">${i}</a></li>
+                        </c:if>
+                    </c:forEach>
+
+                    <c:if test="${map.endPageBtnNo*10 < map.totalCount}">
+                    <li><a href="/boardlist/${map.endPageBtnNo+1}">▶</a></li>
+                    </c:if>
                 </ul>
             </div>
             <div class="bottom">
