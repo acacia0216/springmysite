@@ -7,16 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 public class BoardController {
 
     @Autowired
     BoardService boardService;
 
-    @RequestMapping(value = "/boardlist", method = RequestMethod.GET)//전체 찾아오기
-    public String boardlist(Model model){
+    @RequestMapping(value = "/boardlist/{crtpage}", method = RequestMethod.GET)//전체 찾아오기
+    public String boardlist(Model model,@PathVariable int crtpage){
         System.out.println("boardlist 들어옴");
-        model.addAttribute("boardlist",boardService.listAll());
+        Map map = boardService.listAll(crtpage);
+        model.addAttribute("map",map);
         return "board/list";
     }
 

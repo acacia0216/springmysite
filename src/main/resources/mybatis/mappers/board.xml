@@ -12,15 +12,23 @@
         ]]>
 </insert>
     <!--전체 호출-->
-    <select id="listAll" resultType="kr.co.bit.vo.BoardVO">
+    <select id="listAll" parameterType="Map" resultType="kr.co.bit.vo.BoardVO">
         <![CDATA[
+        select * from(
         select rownum rnum, temp.*
         from (select b.no, b.title, b.content, b.hit, b.reg_date, u.NAME, b.USER_NO
         from board b, USERS u
-        where b.user_no=u.NO order by no desc) temp
-         /*where rownum between ? and ?";*/
+        where b.user_no=u.NO order by no desc) temp)
+         where rnum > #{startnum} and rnum <= #{endnum}
         ]]>
     </select>
+
+    <select id="totalCount" resultType="int">
+        select count(*) from BOARD
+    </select>
+
+
+
     <!--키워드 호출-->
     <select id="searchkwd" parameterType="String" resultType="kr.co.bit.vo.BoardVO">
     <![CDATA[
